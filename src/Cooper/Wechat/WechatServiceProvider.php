@@ -18,7 +18,9 @@ class WechatServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('cooper/wechat');
+        $this->publishes([
+            __DIR__ . '/../../config/wechat.php' => config_path('wechat.php'),
+        ]);
 
 		// 加载路由
 		//
