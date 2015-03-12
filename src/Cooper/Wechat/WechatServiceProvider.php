@@ -21,14 +21,6 @@ class WechatServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__ . '/../../config/wechat.php' => config_path('wechat.php'),
         ]);
-
-		// 加载路由
-		//
-		include __DIR__ .'/../../routes.php';
-
-		// 加载过滤数据
-		//
-		include __DIR__ .'/../../filters.php';
 	}
 
 	/**
