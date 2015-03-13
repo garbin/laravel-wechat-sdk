@@ -1,7 +1,6 @@
 <?php namespace Cooper\Wechat;
 
 use Illuminate\Support\Facades\Input as Input;
-use Illuminate\Support\Facades\Config as Config;
 use Illuminate\Support\Facades\Cache as Cache;
 
 /**
@@ -133,8 +132,8 @@ class WeChatClient {
         }
         else
         {
-            $this->_appid     = Config::get('wechat::wechat.appId');
-            $this->_appsecret = Config::get('wechat::wechat.appSecret');
+            $this->_appid     = config('wechat.appId');
+            $this->_appsecret = config('wechat.appSecret');
         }
     }
 
@@ -906,15 +905,17 @@ class WeChatClient {
         $access_token = $this->getAccessToken();
 
         $scene_id   = isset($options['scene_id']) ? (int)$options['scene_id'] : 0;
+        $scene_str   = isset($options['scene_str']) ? $options['scene_str'] : null;
         $expire     = isset($options['expire']) ? (int)$options['expire'] : 0;
         $ticketOnly = isset($options['ticketOnly']) ? $options['ticketOnly'] : 1;
 
         $url  = self::$_URL_API_ROOT . "/cgi-bin/qrcode/create?access_token=$access_token";
         $data = array(
-            'action_name' => 'QR_LIMIT_SCENE',
+            'action_name' => $scene_str === null ? 'QR_LIMIT_SCENE' : 'QR_LIMIT_STR_SCENE',
             'action_info' => array(
                 'scene' => array(
-                    'scene_id' => $scene_id
+                    'scene_id' => $scene_id,
+                    'scene_str' => $scene_str
                 )
             )
         );

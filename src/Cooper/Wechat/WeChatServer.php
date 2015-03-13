@@ -1,7 +1,6 @@
 <?php namespace Cooper\Wechat;
 
 use Illuminate\Support\Facades\Input as Input;
-use Illuminate\Support\Facades\Config as Config;
 
 /**
  * Class WeChatServer 微信服务
@@ -49,7 +48,7 @@ class WeChatServer {
         }
         else
         {
-            $this->_token = Config::get('wechat::wechat.Token');
+            $this->_token = config("wechat.Token");
         }
 
         $this->accessDataPush();
@@ -216,6 +215,7 @@ class WeChatServer {
     {
         // 调试模式关闭验证
         //
+
         if (Input::get('debug') != 'true' && !$this->_checkSignature())
         {
             header('HTTP/1.1 404 Not Found');
